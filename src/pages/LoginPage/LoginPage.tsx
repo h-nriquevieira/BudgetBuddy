@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Callout,
   Flex,
   Grid,
   Heading,
@@ -12,14 +13,29 @@ import { ChangeEvent, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { styles } from "./LoginPageStyles";
 import HeroImg from "../../assets/login-hero.svg";
+import {
+  signInWithEmail,
+  signInWithGoogle,
+  signUpWithEmail,
+} from "../../service/AuthServices";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { useNavigate } from "react-router";
+import { useAuthContext } from "../../context/AuthContext/useAuthContext";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+
+  const { user } = useAuthContext();
+
+  if (user) navigate("/app/dashboard");
+
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
     confirmPassword: "",
   });
   const [isSignUp, setIsSignUp] = useState(false);
+  const [error, setError] = useState("");
 
   const isSmallScreen = useMediaQuery({
     query: "(max-width: 800px)",
@@ -27,6 +43,54 @@ export default function LoginPage() {
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormValues((prev) => ({ ...prev, [e.target?.name]: e.target.value }));
+  }
+
+  function validateInputs() {
+    if (!formValues.email) {
+      return "Preencha o campo e-mail";
+    }
+    if (!formValues.password) {
+      return "Preencha o campo senha";
+    }
+    if (isSignUp && !formValues.confirmPassword) {
+      return "Confirme sua senha";
+    }
+    if (isSignUp && formValues.password !== formValues.confirmPassword) {
+      return "As senhas não são iguais";
+    }
+    return "";
+  }
+
+  async function handleSignIn() {
+    const validateResponse = validateInputs();
+    if (validateResponse) {
+      setError(validateResponse);
+      return;
+    }
+    const res = await signInWithEmail(formValues.email, formValues.password);
+
+    if (res.error?.message == "Invalid login credentials") {
+      setError("E-mail ou senha incorretos");
+    }
+
+    navigate("/app/dashboard");
+  }
+
+  async function handleSignUp() {
+    const validateResponse = validateInputs();
+    if (validateResponse) {
+      setError(validateResponse);
+      return;
+    }
+
+    const res = await signUpWithEmail(formValues.email, formValues.password);
+
+    if (res.error?.message) {
+      setError(res.error.message);
+      return;
+    }
+
+    navigate("/app/dashboard");
   }
 
   return (
@@ -61,12 +125,15 @@ export default function LoginPage() {
           </Text>
         </Box>
         <TextFieldInput
+          required
           placeholder="E-mail"
           name="email"
+          type="email"
           value={formValues.email}
           onChange={handleChange}
         />
         <TextFieldInput
+          required
           placeholder="Senha"
           type="password"
           name="password"
@@ -75,6 +142,7 @@ export default function LoginPage() {
         />
         {isSignUp && (
           <TextFieldInput
+            required={isSignUp}
             placeholder="Confirme sua senha"
             type="password"
             name="confirmPassword"
@@ -82,9 +150,28 @@ export default function LoginPage() {
             onChange={handleChange}
           />
         )}
-        <Button style={{ cursor: "pointer" }}>Entrar</Button>
-        <Button style={{ cursor: "pointer" }}>Usar conta demo</Button>
-        <Button style={{ cursor: "pointer" }} variant="outline">
+        {error && (
+          <Callout.Root color="red" role="alert">
+            <Callout.Icon>
+              <ExclamationTriangleIcon />
+            </Callout.Icon>
+            <Callout.Text>{error}</Callout.Text>
+          </Callout.Root>
+        )}
+        <Button
+          style={{ cursor: "pointer" }}
+          onClick={isSignUp ? handleSignUp : handleSignIn}
+        >
+          {isSignUp ? "Cadastrar" : "Entrar"}
+        </Button>
+        <Button style={{ cursor: "pointer" }} onClick={handleSignUp}>
+          Usar conta demo
+        </Button>
+        <Button
+          style={{ cursor: "pointer" }}
+          onClick={signInWithGoogle}
+          variant="outline"
+        >
           Entrar com Google
         </Button>
         {isSignUp ? (
