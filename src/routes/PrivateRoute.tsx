@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 export default function PrivateRoute() {
   const { user } = useAuthContext();
 
-  if (!user?.id) {
+  if (!user) {
     return <Navigate to="/login" />;
   }
 
