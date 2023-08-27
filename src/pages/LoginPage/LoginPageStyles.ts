@@ -5,7 +5,7 @@ export const styles = {
     backgroundColor: "var(--accent-9)",
   },
   formContainerDesktop: {
-    width: "max(30%, 400px)",
+    width: "max(40%, 400px)",
     minHeight: "100vh",
     backgroundColor: "var(--accent-9-contrast)",
     padding: "4rem 1.75rem",
