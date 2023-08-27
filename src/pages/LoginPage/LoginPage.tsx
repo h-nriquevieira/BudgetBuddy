@@ -2,12 +2,16 @@ import {
   Box,
   Button,
   Flex,
+  Grid,
   Heading,
   Link,
   Text,
   TextFieldInput,
 } from "@radix-ui/themes";
 import { ChangeEvent, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import { styles } from "./LoginPageStyles";
+import HeroImg from "../../assets/login-hero.svg";
 
 export default function LoginPage() {
   const [formValues, setFormValues] = useState({
@@ -17,31 +21,28 @@ export default function LoginPage() {
   });
   const [isSignUp, setIsSignUp] = useState(false);
 
+  const isSmallScreen = useMediaQuery({
+    query: "(max-width: 800px)",
+  });
+
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormValues((prev) => ({ ...prev, [e.target?.name]: e.target.value }));
   }
 
   return (
     <Flex
-      style={{
-        width: "100%",
-        minHeight: "100vh",
-        paddingTop: "2rem",
-        backgroundColor: "var(--accent-9)",
-      }}
-      justify="center"
+      style={
+        styles[isSmallScreen ? "pageContainerMobile" : "pageContainerDesktop"]
+      }
+      justify={`${isSmallScreen ? "center" : "start"}`}
       align="start"
     >
       <Flex
         direction="column"
         gap="3"
-        style={{
-          maxWidth: "max(85%, 300px)",
-          minHeight: "100%",
-          backgroundColor: "var(--accent-9-contrast)",
-          padding: "4rem 1.75rem",
-          borderRadius: "max(var(--radius-2), var(--radius-full))",
-        }}
+        style={
+          styles[isSmallScreen ? "formContainerMobile" : "formContainerDesktop"]
+        }
       >
         <Heading
           color="jade"
@@ -98,6 +99,11 @@ export default function LoginPage() {
           </Text>
         )}
       </Flex>
+      {!isSmallScreen && (
+        <Grid style={styles.desktopHero} width="100%">
+          <img src={HeroImg} style={styles.heroImg} />
+        </Grid>
+      )}
     </Flex>
   );
 }
