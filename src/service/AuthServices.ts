@@ -21,5 +21,5 @@ export async function signInWithGoogle() {
 }
 
 export async function getUserInfo() {
-  return await supabase.auth.getUser();
+  return (await supabase.auth.getUser()).data.user;
 }
