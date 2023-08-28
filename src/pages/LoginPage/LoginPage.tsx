@@ -9,7 +9,7 @@ import {
   Text,
   TextFieldInput,
 } from "@radix-ui/themes";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { styles } from "./LoginPageStyles";
 import HeroImg from "../../assets/login-hero.svg";
@@ -26,9 +26,13 @@ import { useAuthContext } from "../../context/AuthContext/useAuthContext";
 export default function LoginPage() {
   const navigate = useNavigate();
 
-  const { user } = useAuthContext();
+  const { session } = useAuthContext();
 
-  if (user) navigate("/app/dashboard");
+  useEffect(() => {
+    if (session) {
+      navigate("/app/dashboard");
+    }
+  }, [session]);
 
   const [formValues, setFormValues] = useState({
     email: "",
