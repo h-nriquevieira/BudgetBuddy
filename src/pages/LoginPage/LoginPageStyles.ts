@@ -14,14 +14,12 @@ export const styles = {
   pageContainerMobile: {
     width: "100%",
     minHeight: "100vh",
-    paddingTop: "2rem",
     backgroundColor: "var(--accent-9)",
   },
   formContainerMobile: {
-    maxWidth: "max(85%, 300px)",
-    minHeight: "100%",
+    minHeight: "100vh",
     backgroundColor: "var(--accent-9-contrast)",
-    padding: "4rem 1.75rem",
+    padding: "2rem 1.75rem",
     borderRadius: "max(var(--radius-2), var(--radius-full))",
   },
   desktopHero: {
@@ -31,5 +29,9 @@ export const styles = {
   },
   heroImg: {
     maxWidth: "min(100%, 600px)",
+  },
+  heroImgMobile: {
+    maxWidth: "200px",
+    margin: "0 auto .5rem",
   },
 };
