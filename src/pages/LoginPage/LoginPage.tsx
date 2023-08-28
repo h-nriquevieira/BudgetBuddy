@@ -17,6 +17,7 @@ import {
   signInWithEmail,
   signInWithGoogle,
   signUpWithEmail,
+  translateErrorMessage,
 } from "../../service/AuthServices";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router";
@@ -69,8 +70,9 @@ export default function LoginPage() {
     }
     const res = await signInWithEmail(formValues.email, formValues.password);
 
-    if (res.error?.message == "Invalid login credentials") {
-      setError("E-mail ou senha incorretos");
+    if (res.error) {
+      setError(translateErrorMessage(res.error.message));
+      return;
     }
 
     navigate("/app/dashboard");
@@ -85,8 +87,8 @@ export default function LoginPage() {
 
     const res = await signUpWithEmail(formValues.email, formValues.password);
 
-    if (res.error?.message) {
-      setError(res.error.message);
+    if (res.error) {
+      setError(translateErrorMessage(res.error.message));
       return;
     }
 
