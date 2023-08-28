@@ -114,6 +114,7 @@ export default function LoginPage() {
           styles[isSmallScreen ? "formContainerMobile" : "formContainerDesktop"]
         }
       >
+        {isSmallScreen && <img src={HeroImg} style={styles.heroImgMobile} />}
         <Heading
           color="jade"
           size="7"
