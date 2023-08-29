@@ -21,6 +21,7 @@ export const styles = {
     backgroundColor: "var(--accent-9-contrast)",
     padding: "2rem 1.75rem",
     borderRadius: "max(var(--radius-2), var(--radius-full))",
+    width: "100%",
   },
   desktopHero: {
     padding: "3rem",
