@@ -1,10 +1,11 @@
-import { Box, Flex } from "@radix-ui/themes";
+import { Box, Flex, Heading } from "@radix-ui/themes";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Outlet } from "react-router-dom";
 import Overlay from "../Overlay/Overlay";
 import MobileAppBar from "../MobileAppBar/MobileAppBar";
 import { animated, useSpring } from "@react-spring/web";
+import logo from "../../assets/login-hero.svg";
 
 export default function Navbar() {
   const isSmallScreen = useMediaQuery({
@@ -51,12 +52,30 @@ export default function Navbar() {
           animation: "contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
           minWidth: "min(30%, 350px)",
           minHeight: "100vh",
-          backgroundColor: isSmallScreen ? "var(--jade-a11)" : "var(--jade-11)",
+          backgroundColor: isSmallScreen ? "var(--jade-a11)" : "white",
           zIndex: "2",
+          boxShadow: "0px 0px 20px 0px var(--jade-a11)",
           ...springs,
         }}
       >
-        Testing
+        {!isSmallScreen && (
+          <Flex
+            align="center"
+            style={{
+              padding: "1.5rem",
+              gap: ".25rem",
+              borderBottom: isSmallScreen ? ".5px solid var(--jade-9)" : "none",
+              backgroundColor: "white",
+              width: "100%",
+            }}
+          >
+            <img src={logo} style={{ maxWidth: "75px" }} />
+
+            <Heading color="jade" size="7" align="center">
+              BudgetBuddy
+            </Heading>
+          </Flex>
+        )}
       </AnimatedBox>
       <Overlay open={open} toggleOpen={toggleOpen} />
       <Outlet />

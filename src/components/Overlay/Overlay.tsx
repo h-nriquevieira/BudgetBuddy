@@ -31,8 +31,8 @@ export default function Overlay({ open, toggleOpen }: OverlayProps) {
     <AnimatedBox
       style={{
         display: open ? "initial" : "none",
-        position: "absolute",
-        zIndex: "1",
+        position: "fixed",
+        zIndex: "3",
         minWidth: "100vw",
         minHeight: "100vh",
         overflow: "hidden",

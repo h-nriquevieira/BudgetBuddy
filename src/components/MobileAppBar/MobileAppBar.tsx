@@ -26,8 +26,8 @@ export default function MobileAppBar({ toggleOpen }: MobileAppBarProps) {
         }}
         onClick={toggleOpen}
       />
-
       <img src={logo} style={{ maxWidth: "75px" }} />
+
       <Heading color="jade" size="7" align="center">
         BudgetBuddy
       </Heading>
