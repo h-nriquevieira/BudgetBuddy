@@ -23,7 +23,7 @@ export default function UserProfileCard() {
       style={{
         justifySelf: "end",
         border: "1px solid var(--jade-a5)",
-        margin: "1rem .5rem 1rem",
+        margin: "2rem .5rem 1rem",
       }}
     >
       <Flex gap="3" align="center">
