@@ -50,6 +50,7 @@ export default function Navbar() {
       <AnimatedBox
         style={{
           display: isSidebarShown ? "block" : "none",
+          flexDirection: "column",
           position: isSmallScreen ? "fixed" : "static",
           top: "0",
           left: "0",
@@ -102,8 +103,8 @@ export default function Navbar() {
           >
             Despesas
           </NavButton>
-          <UserProfileCard />
         </Flex>
+        <UserProfileCard />
       </AnimatedBox>
       <Overlay open={open} toggleOpen={toggleOpen} />
       <Outlet />
