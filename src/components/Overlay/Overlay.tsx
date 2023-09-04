@@ -32,7 +32,7 @@ export default function Overlay({ open, toggleOpen }: OverlayProps) {
       style={{
         display: open ? "initial" : "none",
         position: "fixed",
-        zIndex: "3",
+        zIndex: "1",
         minWidth: "100vw",
         minHeight: "100vh",
         overflow: "hidden",

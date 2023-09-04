@@ -24,8 +24,12 @@ export const router = createBrowserRouter([
             element: <Dashboard />,
           },
           {
-            path: "test",
-            element: <p>Test</p>,
+            path: "budget",
+            element: <p>Orçamento</p>,
+          },
+          {
+            path: "expenses",
+            element: <p>Despesas</p>,
           },
         ],
       },

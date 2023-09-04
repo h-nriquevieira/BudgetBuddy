@@ -1,11 +1,12 @@
 import { Box, Flex, Heading } from "@radix-ui/themes";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Overlay from "../Overlay/Overlay";
 import MobileAppBar from "../MobileAppBar/MobileAppBar";
 import { animated, useSpring } from "@react-spring/web";
 import logo from "../../assets/login-hero.svg";
+import NavButton from "../NavButton/NavButton";
 
 export default function Navbar() {
   const isSmallScreen = useMediaQuery({
@@ -17,6 +18,8 @@ export default function Navbar() {
   const isSidebarShown = !isSmallScreen || open;
 
   const AnimatedBox = animated(Box);
+
+  const location = useLocation();
 
   const [springs, api] = useSpring(() => ({
     from: { x: 0 },
@@ -50,32 +53,55 @@ export default function Navbar() {
           top: "0",
           left: "0",
           animation: "contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
-          minWidth: "min(30%, 350px)",
+          minWidth: "min(60%, 350px)",
           minHeight: "100vh",
-          backgroundColor: isSmallScreen ? "var(--jade-a11)" : "white",
+          backgroundColor: "white",
+          // backgroundColor: isSmallScreen ? "var(--jade-11)" : "white",
           zIndex: "2",
           boxShadow: "0px 0px 20px 0px var(--jade-a11)",
           ...springs,
         }}
       >
-        {!isSmallScreen && (
-          <Flex
-            align="center"
-            style={{
-              padding: "1.5rem",
-              gap: ".25rem",
-              borderBottom: isSmallScreen ? ".5px solid var(--jade-9)" : "none",
-              backgroundColor: "white",
-              width: "100%",
-            }}
-          >
-            <img src={logo} style={{ maxWidth: "75px" }} />
+        <Flex
+          align="center"
+          style={{
+            padding: "1.5rem",
+            gap: ".25rem",
+            borderBottom: isSmallScreen ? ".5px solid var(--jade-9)" : "none",
+            backgroundColor: "white",
+            width: "100%",
+          }}
+        >
+          <img src={logo} style={{ maxWidth: "75px" }} />
 
-            <Heading color="jade" size="7" align="center">
-              BudgetBuddy
-            </Heading>
-          </Flex>
-        )}
+          <Heading color="jade" size="7" align="center">
+            BudgetBuddy
+          </Heading>
+        </Flex>
+
+        <Flex direction="column" style={{ padding: "2rem 0" }}>
+          <NavButton
+            isActive={location.pathname == "/app/dashboard" ? true : false}
+            navPath="/app/dashboard"
+            closeSidebar={() => setOpen(false)}
+          >
+            Dashboard
+          </NavButton>
+          <NavButton
+            isActive={location.pathname == "/app/budget" ? true : false}
+            navPath="/app/budget"
+            closeSidebar={() => setOpen(false)}
+          >
+            Orçamento
+          </NavButton>
+          <NavButton
+            isActive={location.pathname == "/app/expenses" ? true : false}
+            navPath="/app/expenses"
+            closeSidebar={() => setOpen(false)}
+          >
+            Despesas
+          </NavButton>
+        </Flex>
       </AnimatedBox>
       <Overlay open={open} toggleOpen={toggleOpen} />
       <Outlet />
