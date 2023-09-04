@@ -7,6 +7,7 @@ import MobileAppBar from "../MobileAppBar/MobileAppBar";
 import { animated, useSpring } from "@react-spring/web";
 import logo from "../../assets/login-hero.svg";
 import NavButton from "../NavButton/NavButton";
+import UserProfileCard from "../UserProfileCard/UserProfileCard";
 
 export default function Navbar() {
   const isSmallScreen = useMediaQuery({
@@ -79,7 +80,7 @@ export default function Navbar() {
           </Heading>
         </Flex>
 
-        <Flex direction="column" style={{ padding: "2rem 0" }}>
+        <Flex direction="column" style={{ padding: "2rem 0 0" }}>
           <NavButton
             isActive={location.pathname == "/app/dashboard" ? true : false}
             navPath="/app/dashboard"
@@ -101,6 +102,7 @@ export default function Navbar() {
           >
             Despesas
           </NavButton>
+          <UserProfileCard />
         </Flex>
       </AnimatedBox>
       <Overlay open={open} toggleOpen={toggleOpen} />
