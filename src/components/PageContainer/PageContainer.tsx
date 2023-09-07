@@ -12,6 +12,8 @@ export default function PageContainer({ children }: PropsWithChildren) {
       style={{
         padding: isSmallScreen ? "2rem 2rem" : "2rem 4rem",
         width: "100%",
+        maxHeight: "100vh",
+        overflow: "scroll",
       }}
     >
       {children}

@@ -3,7 +3,6 @@ import * as Accordion from "@radix-ui/react-accordion";
 import CategoryAccordionItem from "../CategoryAccordionItem/CategoryAccordionItem";
 import styles from "./styles.module.css";
 import { CategoryResponse } from "../../types/CategoryTypes";
-import { useMediaQuery } from "react-responsive";
 import { InfoCircledIcon, PlusIcon } from "@radix-ui/react-icons";
 
 type CategoryPanelProps = {
@@ -14,8 +13,6 @@ export default function CategoryPanel({ categories }: CategoryPanelProps) {
   const headingStyles = {
     fontWeight: "300",
   };
-
-  const isSmallScreen = useMediaQuery({ query: "(max-width: 800px)" });
 
   return (
     <Box style={{ display: "flex", flexDirection: "column" }}>
@@ -34,7 +31,7 @@ export default function CategoryPanel({ categories }: CategoryPanelProps) {
         style={{ marginTop: "2rem", marginLeft: "auto", cursor: "pointer" }}
       >
         <PlusIcon />
-        {!isSmallScreen && "Nova categoria"}
+        Nova categoria
       </Button>
       <Accordion.Root
         type="single"

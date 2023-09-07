@@ -39,11 +39,11 @@ export default function BudgetPanel({ categories }: BudgetPanelProps) {
         <Box
           style={{
             width: "100%",
-            height: "400px",
+            height: isSmallScreen ? "700px" : "400px",
             padding: isSmallScreen ? "0" : "2rem 5rem 2rem 0rem ",
           }}
         >
-          <ResponsiveContainer maxHeight={400} width="100%">
+          <ResponsiveContainer maxHeight={1000} width="100%">
             <PieChart>
               <Pie
                 dataKey="budget"
@@ -59,7 +59,10 @@ export default function BudgetPanel({ categories }: BudgetPanelProps) {
                   />
                 ))}
               </Pie>
-              <Legend layout="vertical" align="right" />
+              <Legend
+                layout="vertical"
+                align={isSmallScreen ? "center" : "right"}
+              />
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
