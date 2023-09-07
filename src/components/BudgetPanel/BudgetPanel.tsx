@@ -27,28 +27,31 @@ export default function BudgetPanel({ categories }: BudgetPanelProps) {
       <Heading as="h2" color="jade" style={headingStyles}>
         Orçamento mensal
       </Heading>
-      <Box
-        style={{
-          width: "100%",
-          height: "400px",
-          padding: isSmallScreen ? "0" : "2rem 5rem 2rem 0rem ",
-        }}
-      >
-        <ResponsiveContainer maxHeight={400} width="100%">
-          <PieChart>
-            <Pie dataKey="value" data={data01} fill="var(--jade-9)" />
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
-      </Box>
-      <Callout.Root>
-        <Callout.Icon>
-          <InfoCircledIcon />
-        </Callout.Icon>
-        <Callout.Text>
-          Edite o orçamento de uma categoria para alterar o orçamento total.
-        </Callout.Text>
-      </Callout.Root>
+      {categories.length ? (
+        <Box
+          style={{
+            width: "100%",
+            height: "400px",
+            padding: isSmallScreen ? "0" : "2rem 5rem 2rem 0rem ",
+          }}
+        >
+          <ResponsiveContainer maxHeight={400} width="100%">
+            <PieChart>
+              <Pie dataKey="value" data={data01} fill="var(--jade-9)" />
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </Box>
+      ) : (
+        <Callout.Root style={{ marginTop: "2rem" }} color="amber">
+          <Callout.Icon>
+            <InfoCircledIcon />
+          </Callout.Icon>
+          <Callout.Text>
+            Você ainda não cadastrou nenhuma categoria.
+          </Callout.Text>
+        </Callout.Root>
+      )}
     </>
   );
 }

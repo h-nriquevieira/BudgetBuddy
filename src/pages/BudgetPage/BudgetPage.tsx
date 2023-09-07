@@ -12,6 +12,7 @@ export default function BudgetPage() {
   });
 
   const categories = useLoaderData() as CategoryResponse[];
+  // const categories = [] as CategoryResponse[];
 
   return (
     <PageContainer>
@@ -19,11 +20,13 @@ export default function BudgetPage() {
         style={{ minWidth: "100%", gap: "2rem" }}
         direction={isSmallScreen ? "column" : "row"}
       >
-        <Box
-          style={{ flexGrow: "1", maxWidth: isSmallScreen ? "100vw" : "50%" }}
-        >
-          <BudgetPanel categories={categories} />
-        </Box>
+        {categories.length > 0 && (
+          <Box
+            style={{ flexGrow: "1", maxWidth: isSmallScreen ? "100vw" : "50%" }}
+          >
+            <BudgetPanel categories={categories} />
+          </Box>
+        )}
         <Box style={{ flexGrow: "1" }}>
           <CategoryPanel categories={categories} />
         </Box>

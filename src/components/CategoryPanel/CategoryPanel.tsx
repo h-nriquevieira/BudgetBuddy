@@ -1,10 +1,10 @@
-import { Box, Button, Heading } from "@radix-ui/themes";
+import { Box, Button, Callout, Heading } from "@radix-ui/themes";
 import * as Accordion from "@radix-ui/react-accordion";
 import CategoryAccordionItem from "../CategoryAccordionItem/CategoryAccordionItem";
 import styles from "./styles.module.css";
 import { CategoryResponse } from "../../types/CategoryTypes";
 import { useMediaQuery } from "react-responsive";
-import { PlusIcon } from "@radix-ui/react-icons";
+import { InfoCircledIcon, PlusIcon } from "@radix-ui/react-icons";
 
 type CategoryPanelProps = {
   categories: CategoryResponse[];
@@ -22,6 +22,14 @@ export default function CategoryPanel({ categories }: CategoryPanelProps) {
       <Heading as="h2" color="jade" style={headingStyles}>
         Categorias
       </Heading>
+      {!categories.length && (
+        <Callout.Root style={{ marginTop: "2rem" }} color="amber">
+          <Callout.Icon>
+            <InfoCircledIcon />
+          </Callout.Icon>
+          <Callout.Text>Adicione sua primeira categoria.</Callout.Text>
+        </Callout.Root>
+      )}
       <Button
         style={{ marginTop: "2rem", marginLeft: "auto", cursor: "pointer" }}
       >
@@ -33,7 +41,7 @@ export default function CategoryPanel({ categories }: CategoryPanelProps) {
         collapsible
         className={styles.AccordionRoot}
       >
-        {categories.length &&
+        {categories &&
           categories.map((category) => (
             <CategoryAccordionItem key={category.id} category={category} />
           ))}
