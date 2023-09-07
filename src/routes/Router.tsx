@@ -5,6 +5,7 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Navbar from "../components/Navbar/Navbar";
 import BudgetPage from "../pages/BudgetPage/BudgetPage";
+import { budgetPageLoader } from "../pages/BudgetPage/budgetPageLoader";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "budget",
+            loader: budgetPageLoader,
             element: <BudgetPage />,
           },
           {

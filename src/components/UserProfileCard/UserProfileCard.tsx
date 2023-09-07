@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function UserProfileCard() {
   const { user } = useAuthContext();
-  console.log(user);
 
   const navigate = useNavigate();
 

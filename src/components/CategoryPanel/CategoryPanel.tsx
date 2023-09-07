@@ -2,8 +2,13 @@ import { Heading } from "@radix-ui/themes";
 import * as Accordion from "@radix-ui/react-accordion";
 import CategoryAccordionItem from "../CategoryAccordionItem/CategoryAccordionItem";
 import styles from "./styles.module.css";
+import { CategoryResponse } from "../../types/CategoryTypes";
 
-export default function CategoryPanel() {
+type CategoryPanelProps = {
+  categories: CategoryResponse[];
+};
+
+export default function CategoryPanel({ categories }: CategoryPanelProps) {
   const headingStyles = {
     fontWeight: "300",
   };
@@ -18,8 +23,10 @@ export default function CategoryPanel() {
         collapsible
         className={styles.AccordionRoot}
       >
-        <CategoryAccordionItem />
-        <CategoryAccordionItem />
+        {categories.length &&
+          categories.map((category) => (
+            <CategoryAccordionItem key={category.id} category={category} />
+          ))}
       </Accordion.Root>
     </>
   );

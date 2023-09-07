@@ -2,8 +2,13 @@ import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { Box, Callout, Heading } from "@radix-ui/themes";
 import { useMediaQuery } from "react-responsive";
 import { PieChart, Pie, Tooltip, ResponsiveContainer } from "recharts";
+import { CategoryResponse } from "../../types/CategoryTypes";
 
-export default function BudgetPanel() {
+type BudgetPanelProps = {
+  categories: CategoryResponse[];
+};
+
+export default function BudgetPanel({ categories }: BudgetPanelProps) {
   const isSmallScreen = useMediaQuery({
     query: "(max-width: 800px)",
   });
