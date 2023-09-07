@@ -1,8 +1,16 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { Box, Callout, Heading } from "@radix-ui/themes";
 import { useMediaQuery } from "react-responsive";
-import { PieChart, Pie, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  Cell,
+  Legend,
+  PieChart,
+  Pie,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import { CategoryResponse } from "../../types/CategoryTypes";
+import { COLORS } from "../../utils/colors";
 
 type BudgetPanelProps = {
   categories: CategoryResponse[];
@@ -17,7 +25,7 @@ export default function BudgetPanel({ categories }: BudgetPanelProps) {
     fontWeight: "300",
   };
 
-  const data01 = categories.map((category) => ({
+  const data = categories.map((category) => ({
     name: category.name,
     value: category.budget,
   }));
@@ -38,11 +46,20 @@ export default function BudgetPanel({ categories }: BudgetPanelProps) {
           <ResponsiveContainer maxHeight={400} width="100%">
             <PieChart>
               <Pie
-                dataKey="value"
-                data={data01}
+                dataKey="budget"
+                data={categories}
                 fill="var(--jade-9)"
                 legendType="circle"
-              />
+                innerRadius="50%"
+              >
+                {data.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Legend layout="vertical" align="right" />
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
