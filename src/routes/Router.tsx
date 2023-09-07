@@ -4,6 +4,7 @@ import PrivateRoute from "./PrivateRoute";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Navbar from "../components/Navbar/Navbar";
+import BudgetPage from "../pages/BudgetPage/BudgetPage";
 
 export const router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "budget",
-            element: <p>Orçamento</p>,
+            element: <BudgetPage />,
           },
           {
             path: "expenses",
