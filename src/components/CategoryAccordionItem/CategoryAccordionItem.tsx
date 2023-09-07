@@ -13,7 +13,10 @@ export default function CategoryAccordionItem({
   category,
 }: CategoryAccordionItemProps) {
   return (
-    <Accordion.Item value="item-1" className={styles.AccordionItem}>
+    <Accordion.Item
+      value={category.name + category.id}
+      className={styles.AccordionItem}
+    >
       <Accordion.Header className={styles.AccordionHeader}>
         <Accordion.Trigger className={styles.AccordionTrigger}>
           {category.name}

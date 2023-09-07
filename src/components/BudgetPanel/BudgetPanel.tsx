@@ -37,7 +37,12 @@ export default function BudgetPanel({ categories }: BudgetPanelProps) {
         >
           <ResponsiveContainer maxHeight={400} width="100%">
             <PieChart>
-              <Pie dataKey="value" data={data01} fill="var(--jade-9)" />
+              <Pie
+                dataKey="value"
+                data={data01}
+                fill="var(--jade-9)"
+                legendType="circle"
+              />
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>

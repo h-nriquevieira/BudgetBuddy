@@ -12,7 +12,6 @@ export default function BudgetPage() {
   });
 
   const categories = useLoaderData() as CategoryResponse[];
-  // const categories = [] as CategoryResponse[];
 
   return (
     <PageContainer>
