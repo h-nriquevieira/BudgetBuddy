@@ -29,6 +29,7 @@ h3 {
   align-items: center;
   justify-content: space-between;
   font-size: 1rem;
+  font-weight: 300;
   line-height: 1;
   color: var(--black-9);
   box-shadow: 0 1px 0 var(--mauve-6);
@@ -37,6 +38,12 @@ h3 {
 
 .AccordionTrigger:hover {
   background-color: var(--jade-a3);
+}
+
+.AccordionTrigger[data-state="open"] {
+  background-color: var(--jade-a9);
+  color: white;
+  font-weight: 800;
 }
 
 .AccordionContent {
@@ -57,7 +64,6 @@ h3 {
 }
 
 .AccordionChevron {
-  color: var(--violet-10);
   transition: transform 300ms cubic-bezier(0.87, 0, 0.13, 1);
 }
 .AccordionTrigger[data-state="open"] > .AccordionChevron {
