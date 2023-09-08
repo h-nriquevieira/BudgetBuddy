@@ -10,13 +10,26 @@ import {
   Callout,
 } from "@radix-ui/themes";
 import { useState } from "react";
+import { postNewCategory } from "../../service/CategoryService";
+import { useAuthContext } from "../../context/AuthContext/useAuthContext";
+import { useSubmit } from "react-router-dom";
 
-export default function NewCategoryPopover() {
+type NewCategoryPopoverProps = {
+  setIsPopoverOpen: (value: boolean) => void;
+};
+
+export default function NewCategoryPopover({
+  setIsPopoverOpen,
+}: NewCategoryPopoverProps) {
   const [formValues, setFormValues] = useState({
     categoryName: "",
     categoryBudget: "",
   });
   const [error, setError] = useState("");
+
+  const submit = useSubmit();
+
+  const { user } = useAuthContext();
 
   function handleBudgetChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (/^((\d)+(,\d{0,2})?)?$/.test(e.target.value)) {
@@ -32,12 +45,27 @@ export default function NewCategoryPopover() {
     return /^(\d)+(,\d{1,2})?$/.test(value);
   }
 
-  function handleSubmit() {
+  async function handleCategorySubmit() {
+    if (!user) return;
     setError("");
     if (!formValues.categoryBudget || !formValues.categoryName) {
       setError("Preencha todos os campos");
     } else if (!checkForCurrency(formValues.categoryBudget)) {
       setError("Preencha corretamente o campo orçamento. Ex.: 500 ou 500,00");
+    }
+
+    const newCategory = {
+      name: formValues.categoryName,
+      budget: parseFloat(formValues.categoryBudget.replace(",", ".")),
+      user_id: user.id,
+    };
+
+    const res = await postNewCategory(newCategory);
+    if (res.statusText == "Created") {
+      submit(newCategory);
+      setIsPopoverOpen(false);
+    } else {
+      setError("Ops, parece que algo deu errado.");
     }
   }
 
@@ -82,11 +110,18 @@ export default function NewCategoryPopover() {
         }}
       >
         <PopoverClose>
-          <Button style={{ cursor: "pointer", flex: "1" }} variant="outline">
+          <Button
+            style={{ cursor: "pointer", flex: "1" }}
+            variant="outline"
+            onClick={() => setIsPopoverOpen(false)}
+          >
             Cancelar
           </Button>
         </PopoverClose>
-        <Button style={{ cursor: "pointer", flex: "1" }} onClick={handleSubmit}>
+        <Button
+          style={{ cursor: "pointer", flex: "1" }}
+          onClick={handleCategorySubmit}
+        >
           Salvar
         </Button>
       </Box>

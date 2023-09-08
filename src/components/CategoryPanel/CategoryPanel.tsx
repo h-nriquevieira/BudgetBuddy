@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 import { CategoryResponse } from "../../types/CategoryTypes";
 import { InfoCircledIcon, PlusIcon } from "@radix-ui/react-icons";
 import NewCategoryPopover from "../NewCategoryPopover/NewCategoryPopover";
+import { useState } from "react";
 
 type CategoryPanelProps = {
   categories: CategoryResponse[];
@@ -14,6 +15,8 @@ export default function CategoryPanel({ categories }: CategoryPanelProps) {
   const headingStyles = {
     fontWeight: "300",
   };
+
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   return (
     <>
@@ -29,7 +32,7 @@ export default function CategoryPanel({ categories }: CategoryPanelProps) {
             <Callout.Text>Adicione sua primeira categoria.</Callout.Text>
           </Callout.Root>
         )}
-        <Popover.Root>
+        <Popover.Root open={isPopoverOpen}>
           <Popover.Trigger>
             <Button
               style={{
@@ -37,14 +40,15 @@ export default function CategoryPanel({ categories }: CategoryPanelProps) {
                 marginLeft: "auto",
                 cursor: "pointer",
               }}
+              onClick={() => setIsPopoverOpen(true)}
             >
               <PlusIcon />
               Nova categoria
             </Button>
           </Popover.Trigger>
 
-          <Popover.Content>
-            <NewCategoryPopover />
+          <Popover.Content onEscapeKeyDown={() => setIsPopoverOpen(false)}>
+            <NewCategoryPopover setIsPopoverOpen={setIsPopoverOpen} />
           </Popover.Content>
         </Popover.Root>
         <Accordion.Root
