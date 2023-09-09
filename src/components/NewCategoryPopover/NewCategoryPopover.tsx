@@ -16,10 +16,12 @@ import { useSubmit } from "react-router-dom";
 
 type NewCategoryPopoverProps = {
   setIsPopoverOpen: (value: boolean) => void;
+  triggerNotification: () => void;
 };
 
 export default function NewCategoryPopover({
   setIsPopoverOpen,
+  triggerNotification,
 }: NewCategoryPopoverProps) {
   const [formValues, setFormValues] = useState({
     categoryName: "",
@@ -63,6 +65,7 @@ export default function NewCategoryPopover({
     const res = await postNewCategory(newCategory);
     if (res.statusText == "Created") {
       submit(newCategory);
+      triggerNotification();
       setIsPopoverOpen(false);
     } else {
       setError("Ops, parece que algo deu errado.");

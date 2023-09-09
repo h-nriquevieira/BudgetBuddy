@@ -6,6 +6,7 @@ import { CategoryResponse } from "../../types/CategoryTypes";
 import { InfoCircledIcon, PlusIcon } from "@radix-ui/react-icons";
 import NewCategoryPopover from "../NewCategoryPopover/NewCategoryPopover";
 import { useState } from "react";
+import Notification from "../Notification/Notification";
 
 type CategoryPanelProps = {
   categories: CategoryResponse[];
@@ -17,6 +18,7 @@ export default function CategoryPanel({ categories }: CategoryPanelProps) {
   };
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isNotificationShown, setIsNotificationShown] = useState(false);
 
   return (
     <>
@@ -32,6 +34,7 @@ export default function CategoryPanel({ categories }: CategoryPanelProps) {
             <Callout.Text>Adicione sua primeira categoria.</Callout.Text>
           </Callout.Root>
         )}
+
         <Popover.Root open={isPopoverOpen}>
           <Popover.Trigger>
             <Button
@@ -48,7 +51,10 @@ export default function CategoryPanel({ categories }: CategoryPanelProps) {
           </Popover.Trigger>
 
           <Popover.Content onEscapeKeyDown={() => setIsPopoverOpen(false)}>
-            <NewCategoryPopover setIsPopoverOpen={setIsPopoverOpen} />
+            <NewCategoryPopover
+              setIsPopoverOpen={setIsPopoverOpen}
+              triggerNotification={() => setIsNotificationShown(true)}
+            />
           </Popover.Content>
         </Popover.Root>
         <Accordion.Root
@@ -62,6 +68,13 @@ export default function CategoryPanel({ categories }: CategoryPanelProps) {
             ))}
         </Accordion.Root>
       </Box>
+      {isNotificationShown && (
+        <Notification
+          type="success"
+          text="Categoria cadastrada com sucesso"
+          closeNotification={() => setIsNotificationShown(false)}
+        />
+      )}
     </>
   );
 }
