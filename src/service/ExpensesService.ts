@@ -20,7 +20,7 @@ export async function getExpenses() {
     },
     {
       amount: 65.2,
-      category_id: 11,
+      category_id: 10,
       date: "2023-09-05T00:00",
       description: null,
       id: 3,

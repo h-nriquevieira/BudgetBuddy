@@ -11,7 +11,10 @@ import ExpensesTable from "../../components/ExpensesTable/ExpensesTable";
 export default function ExpensesPage() {
   const [date, setDate] = useState(new Date());
 
-  const expenses = useLoaderData() as ExpenseResponse[];
+  const { expenses, categories } = useLoaderData() as {
+    expenses: ExpenseResponse[];
+    categories: { [key: string]: string };
+  };
 
   function shouldShowExpense(expense: ExpenseResponse) {
     const expenseDate = new Date(expense.date);
@@ -88,7 +91,7 @@ export default function ExpensesPage() {
           <ChevronRightIcon />
         </Button>
       </Box>
-      <ExpensesTable expenses={filteredExpenses} />
+      <ExpensesTable expenses={filteredExpenses} categories={categories} />
     </PageContainer>
   );
 }
