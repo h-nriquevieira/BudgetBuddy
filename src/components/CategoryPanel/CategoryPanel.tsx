@@ -1,4 +1,4 @@
-import { Box, Button, Callout, Popover, Heading } from "@radix-ui/themes";
+import { Box, Button, Callout, Popover } from "@radix-ui/themes";
 import * as Accordion from "@radix-ui/react-accordion";
 import CategoryAccordionItem from "../CategoryAccordionItem/CategoryAccordionItem";
 import styles from "./styles.module.css";
@@ -7,6 +7,7 @@ import { InfoCircledIcon, PlusIcon } from "@radix-ui/react-icons";
 import NewCategoryPopover from "../NewCategoryPopover/NewCategoryPopover";
 import { useState } from "react";
 import Notification from "../Notification/Notification";
+import BrandHeading from "../BrandHeading/BrandHeading";
 
 type CategoryPanelProps = {
   categories: CategoryResponse[];
@@ -23,9 +24,7 @@ export default function CategoryPanel({ categories }: CategoryPanelProps) {
   return (
     <>
       <Box style={{ display: "flex", flexDirection: "column" }}>
-        <Heading as="h2" color="jade" style={headingStyles}>
-          Categorias
-        </Heading>
+        <BrandHeading>Categorias</BrandHeading>
         {!categories.length && (
           <Callout.Root style={{ marginTop: "2rem" }} color="amber">
             <Callout.Icon>
