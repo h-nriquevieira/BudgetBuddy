@@ -1,16 +1,11 @@
-import { Avatar, Box, Button, Card, Flex, Link, Text } from "@radix-ui/themes";
+import { Avatar, Box, Button, Card, Flex, Text } from "@radix-ui/themes";
 import { useAuthContext } from "../../context/AuthContext/useAuthContext";
 import { signOut } from "../../service/AuthServices";
 import { useNavigate } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
 
 export default function UserProfileCard() {
   const { user } = useAuthContext();
-  console.log(user);
 
-  const isSmallScreen = useMediaQuery({
-    query: "(max-width: 900px)",
-  });
   const navigate = useNavigate();
 
   async function logOut() {
@@ -40,7 +35,7 @@ export default function UserProfileCard() {
           <Button
             variant="ghost"
             color="tomato"
-            style={{ marginTop: ".05rem" }}
+            style={{ marginTop: ".05rem", cursor: "pointer" }}
             onClick={logOut}
           >
             Sair

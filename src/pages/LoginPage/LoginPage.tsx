@@ -17,11 +17,11 @@ import {
   signInWithEmail,
   signInWithGoogle,
   signUpWithEmail,
-  translateErrorMessage,
 } from "../../service/AuthServices";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "../../context/AuthContext/useAuthContext";
+import { translateErrorMessage } from "../../utils/translateErrorMessage";
 
 export default function LoginPage() {
   const navigate = useNavigate();
