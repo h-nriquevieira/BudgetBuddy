@@ -29,6 +29,7 @@ export default function BudgetPanel({ categories }: BudgetPanelProps) {
   return (
     <>
       <BrandHeading>Orçamento mensal</BrandHeading>
+
       {categories.length ? (
         <Box
           style={{

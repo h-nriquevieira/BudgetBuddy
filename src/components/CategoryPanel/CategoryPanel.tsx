@@ -14,10 +14,6 @@ type CategoryPanelProps = {
 };
 
 export default function CategoryPanel({ categories }: CategoryPanelProps) {
-  const headingStyles = {
-    fontWeight: "300",
-  };
-
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isNotificationShown, setIsNotificationShown] = useState(false);
 
