@@ -1,7 +1,9 @@
-import { Callout, Table } from "@radix-ui/themes";
+import { Box, Button, Callout, Popover, Table } from "@radix-ui/themes";
 import { ExpenseResponse } from "../../types/ExpensesTypes";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
+import ExpenseCategoryFilter from "../ExpenseCategoryFilter/ExpenseCategoryFilter";
 
 type ExpensesTableProps = {
   expenses: ExpenseResponse[];
@@ -12,6 +14,13 @@ export default function ExpensesTable({
   expenses,
   categories,
 }: ExpensesTableProps) {
+  const [categoryFilter, setCategoryFilter] = useState<string[]>(
+    [] as string[],
+  );
+
+  const filteredCategories =
+    categoryFilter.length > 0 ? [...categoryFilter] : Object.keys(categories);
+
   if (expenses.length == 0) {
     return (
       <Callout.Root>
@@ -24,30 +33,54 @@ export default function ExpensesTable({
   }
 
   return (
-    <Table.Root>
-      <Table.Header>
-        <Table.Row>
-          <Table.ColumnHeaderCell>Descrição</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Categoria</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Data</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Valor</Table.ColumnHeaderCell>
-        </Table.Row>
-      </Table.Header>
-
-      <Table.Body>
-        {expenses.map((expense) => (
-          <Table.Row key={expense.id}>
-            <Table.RowHeaderCell>{expense.name}</Table.RowHeaderCell>
-            <Table.Cell>
-              {categories[expense.category_id.toString()]}
-            </Table.Cell>
-            <Table.Cell>
-              {new Date(expense.date).toLocaleDateString("pt-br")}
-            </Table.Cell>
-            <Table.Cell>{currencyFormatter.format(expense.amount)}</Table.Cell>
+    <>
+      <Box style={{ display: "flex", gap: ".5rem", marginBottom: "1rem" }}>
+        <Popover.Root>
+          <Popover.Trigger>
+            <Button style={{ cursor: "pointer" }} variant="outline">
+              Filtrar
+            </Button>
+          </Popover.Trigger>
+          <Popover.Content>
+            <ExpenseCategoryFilter
+              categories={categories}
+              categoryFilter={categoryFilter}
+              setCategoryFilter={setCategoryFilter}
+            />
+          </Popover.Content>
+        </Popover.Root>
+        <Button style={{ cursor: "pointer" }}>Nova despesa</Button>
+      </Box>
+      <Table.Root>
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeaderCell>Descrição</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Categoria</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Data</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Valor</Table.ColumnHeaderCell>
           </Table.Row>
-        ))}
-      </Table.Body>
-    </Table.Root>
+        </Table.Header>
+
+        <Table.Body>
+          {expenses.map(
+            (expense) =>
+              filteredCategories.includes(expense.category_id.toString()) && (
+                <Table.Row key={expense.id}>
+                  <Table.RowHeaderCell>{expense.name}</Table.RowHeaderCell>
+                  <Table.Cell>
+                    {categories[expense.category_id.toString()]}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {new Date(expense.date).toLocaleDateString("pt-br")}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {currencyFormatter.format(expense.amount)}
+                  </Table.Cell>
+                </Table.Row>
+              ),
+          )}
+        </Table.Body>
+      </Table.Root>
+    </>
   );
 }
