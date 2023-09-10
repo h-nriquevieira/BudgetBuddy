@@ -84,13 +84,14 @@ export default function NewExpensePopover({
         />
       </TextField.Root>
       <Select.Root name="category_id" onValueChange={handleSelectChange}>
-        <Select.Trigger placeholder="Categoria" />
+        <Select.Trigger placeholder="Categoria" style={{ cursor: "pointer" }} />
         <Select.Content>
           {Object.keys(categories).map((category) => (
             <Select.Item
               value={category}
               key={category}
               onClick={() => console.log(category)}
+              style={{ cursor: "pointer" }}
             >
               {categories[category]}
             </Select.Item>
@@ -124,6 +125,12 @@ export default function NewExpensePopover({
           />
         </Popover.Content>
       </Popover.Root>
+      <Box style={{ display: "flex", gap: ".5rem", justifyContent: "end" }}>
+        <Button style={{ cursor: "pointer" }} variant="outline">
+          Limpar
+        </Button>
+        <Button style={{ cursor: "pointer" }}>Salvar</Button>
+      </Box>
     </Box>
   );
 }
