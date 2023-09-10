@@ -4,6 +4,7 @@ import { currencyFormatter } from "../../utils/currencyFormatter";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import ExpenseCategoryFilter from "../ExpenseCategoryFilter/ExpenseCategoryFilter";
+import NewExpensePopover from "../NewExpensePopover/NewExpensePopover";
 
 type ExpensesTableProps = {
   expenses: ExpenseResponse[];
@@ -49,7 +50,14 @@ export default function ExpensesTable({
             />
           </Popover.Content>
         </Popover.Root>
-        <Button style={{ cursor: "pointer" }}>Nova despesa</Button>
+        <Popover.Root>
+          <Popover.Trigger>
+            <Button style={{ cursor: "pointer" }}>Nova despesa</Button>
+          </Popover.Trigger>
+          <Popover.Content>
+            <NewExpensePopover categories={categories} />
+          </Popover.Content>
+        </Popover.Root>
       </Box>
       <Table.Root>
         <Table.Header>
@@ -66,7 +74,9 @@ export default function ExpensesTable({
             (expense) =>
               filteredCategories.includes(expense.category_id.toString()) && (
                 <Table.Row key={expense.id}>
-                  <Table.RowHeaderCell>{expense.name}</Table.RowHeaderCell>
+                  <Table.RowHeaderCell>
+                    {expense.description}
+                  </Table.RowHeaderCell>
                   <Table.Cell>
                     {categories[expense.category_id.toString()]}
                   </Table.Cell>
