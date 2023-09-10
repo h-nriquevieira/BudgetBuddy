@@ -11,9 +11,10 @@ import ExpensesTable from "../../components/ExpensesTable/ExpensesTable";
 export default function ExpensesPage() {
   const [date, setDate] = useState(new Date());
 
-  const { expenses, categories } = useLoaderData() as {
+  const { expenses, categories, minDate } = useLoaderData() as {
     expenses: ExpenseResponse[];
     categories: { [key: string]: string };
+    minDate: Date;
   };
 
   function shouldShowExpense(expense: ExpenseResponse) {
@@ -32,8 +33,15 @@ export default function ExpensesPage() {
       ? true
       : false;
 
+  const disableBackward =
+    date.getMonth() == minDate.getMonth() &&
+    date.getFullYear() == minDate.getFullYear();
+
   function changeMonth(difference: number) {
-    if (difference > 0 && disableForward) {
+    if (
+      (difference > 0 && disableForward) ||
+      (difference < 0 && disableBackward)
+    ) {
       return;
     }
     setDate((prev) => {
@@ -56,8 +64,12 @@ export default function ExpensesPage() {
       >
         <Button
           variant="soft"
-          style={{ cursor: "pointer", borderRadius: "100%" }}
+          style={{
+            cursor: disableBackward ? "initial" : "pointer",
+            borderRadius: "100%",
+          }}
           onClick={() => changeMonth(-1)}
+          disabled={disableBackward}
         >
           <ChevronLeftIcon />
         </Button>

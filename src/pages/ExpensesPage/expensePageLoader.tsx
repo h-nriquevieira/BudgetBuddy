@@ -10,9 +10,16 @@ export async function expensePageLoader() {
     categories[category.id.toString()] = category.name;
   });
 
+  const minDate = new Date(
+    [...expensesData.data].sort(
+      (a, b) => new Date(a.date) - new Date(b.date),
+    )[0].date,
+  );
+
   const pageData = {
     categories: { ...categories },
     expenses: [...expensesData.data],
+    minDate: new Date(minDate),
   };
   return pageData;
 }
