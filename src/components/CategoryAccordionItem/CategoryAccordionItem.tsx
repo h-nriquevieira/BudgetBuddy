@@ -4,6 +4,8 @@ import styles from "../CategoryPanel/styles.module.css";
 import { Box, Button, Text } from "@radix-ui/themes";
 import { CategoryResponse } from "../../types/CategoryTypes";
 import { currencyFormatter } from "../../utils/currencyFormatter";
+import { useEffect, useState } from "react";
+import { getExpensesByCategoryId } from "../../service/ExpensesService";
 
 type CategoryAccordionItemProps = {
   category: CategoryResponse;
@@ -12,6 +14,14 @@ type CategoryAccordionItemProps = {
 export default function CategoryAccordionItem({
   category,
 }: CategoryAccordionItemProps) {
+  const [amountSpent, setAmountSpent] = useState<number>();
+
+  useEffect(() => {
+    getExpensesByCategoryId(category.id).then(
+      (amount) => amount && setAmountSpent(amount),
+    );
+  }, [category.id]);
+
   return (
     <Accordion.Item
       value={category.name + category.id}
@@ -34,7 +44,11 @@ export default function CategoryAccordionItem({
           </Text>
           <Text>
             Restante:{" "}
-            {category.budget && currencyFormatter.format(category.budget)}
+            {amountSpent
+              ? currencyFormatter.format(
+                  (category.budget as number) - amountSpent,
+                )
+              : currencyFormatter.format(category.budget as number)}
           </Text>
         </Box>
         <Box
