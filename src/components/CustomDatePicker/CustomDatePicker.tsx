@@ -6,13 +6,11 @@ import "./styles.css";
 type CustomDatePickerProps = {
   value: string;
   setValue: (date: string) => void;
-  toggleDatePicker: () => void;
 };
 
 export default function CustomDatePicker({
   value,
   setValue,
-  toggleDatePicker,
 }: CustomDatePickerProps) {
   function handleSelect(e: Date) {
     const date = format(e, "yyyy-MM-dd") + "T00:00";

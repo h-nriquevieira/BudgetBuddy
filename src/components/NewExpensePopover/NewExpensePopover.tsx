@@ -126,7 +126,6 @@ export default function NewExpensePopover({
           <CustomDatePicker
             value={formValues.date}
             setValue={handleDateChange}
-            toggleDatePicker={toggleDatePicker}
           />
         </Popover.Content>
       </Popover.Root>
