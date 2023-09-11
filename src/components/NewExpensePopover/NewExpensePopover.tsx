@@ -1,7 +1,8 @@
-import { CalendarIcon } from "@radix-ui/react-icons";
+import { CalendarIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import {
   Box,
   Button,
+  Callout,
   Heading,
   Popover,
   Select,
@@ -12,22 +13,35 @@ import {
 import { useState } from "react";
 import CustomDatePicker from "../CustomDatePicker/CustomDatePicker";
 import { format } from "date-fns";
+import { ExpenseCreateRequest } from "../../types/ExpensesTypes";
+import { useAuthContext } from "../../context/AuthContext/useAuthContext";
+import { postExpense } from "../../service/ExpensesService";
+import { useSubmit } from "react-router-dom";
 
 type NewExpensePopoverProps = {
   categories: { [key: string]: string };
+  triggerNotification: () => void;
 };
 
 export default function NewExpensePopover({
   categories,
+  triggerNotification,
 }: NewExpensePopoverProps) {
-  const [formValues, setFormValues] = useState({
+  const { user } = useAuthContext();
+  const submit = useSubmit();
+
+  const initialFormValue = {
     amount: "",
     category_id: "",
     date: format(new Date(), "yyyy-MM-dd") + "T00:00",
     description: "",
-  });
+  };
+
+  const [formValues, setFormValues] = useState(initialFormValue);
 
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+
+  const [error, setError] = useState("");
 
   function handleBudgetChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (/^((\d)+(,\d{0,2})?)?$/.test(e.target.value)) {
@@ -53,6 +67,33 @@ export default function NewExpensePopover({
 
   function toggleDatePicker() {
     setIsDatePickerOpen((prev) => !prev);
+  }
+
+  async function sendCreateRequest() {
+    if (!user) return;
+    if (
+      !formValues.amount ||
+      !formValues.category_id ||
+      !formValues.date ||
+      !formValues.description
+    ) {
+      setError("Preencha todos os campos.");
+      return;
+    }
+    const expense: ExpenseCreateRequest = {
+      amount: parseFloat(formValues.amount.replace(",", ".")),
+      category_id: parseInt(formValues.category_id),
+      date: formValues.date,
+      description: formValues.description,
+      user_id: user?.id,
+    };
+    const res = await postExpense(expense);
+    if (res.statusText == "Created") {
+      submit(expense);
+      triggerNotification();
+    } else {
+      setError("Ops, parece que algo deu errado.");
+    }
   }
 
   return (
@@ -130,11 +171,28 @@ export default function NewExpensePopover({
         </Popover.Content>
       </Popover.Root>
       <Box style={{ display: "flex", gap: ".5rem", justifyContent: "end" }}>
-        <Button style={{ cursor: "pointer" }} variant="outline">
+        <Button
+          style={{ cursor: "pointer" }}
+          variant="outline"
+          onClick={() => {
+            setFormValues(initialFormValue);
+            setError("");
+          }}
+        >
           Limpar
         </Button>
-        <Button style={{ cursor: "pointer" }}>Salvar</Button>
+        <Button style={{ cursor: "pointer" }} onClick={sendCreateRequest}>
+          Salvar
+        </Button>
       </Box>
+      {error && (
+        <Callout.Root color="tomato" style={{ maxWidth: "min(400px, 70vw)" }}>
+          <Callout.Icon>
+            <ExclamationTriangleIcon />
+          </Callout.Icon>
+          <Callout.Text>{error}</Callout.Text>
+        </Callout.Root>
+      )}
     </Box>
   );
 }

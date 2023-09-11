@@ -5,6 +5,7 @@ import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import ExpenseCategoryFilter from "../ExpenseCategoryFilter/ExpenseCategoryFilter";
 import NewExpensePopover from "../NewExpensePopover/NewExpensePopover";
+import Notification from "../Notification/Notification";
 
 type ExpensesTableProps = {
   expenses: ExpenseResponse[];
@@ -18,6 +19,8 @@ export default function ExpensesTable({
   const [categoryFilter, setCategoryFilter] = useState<string[]>(
     [] as string[],
   );
+
+  const [isNotificationShown, setIsNotificationShown] = useState(false);
 
   const filteredCategories =
     categoryFilter.length > 0 ? [...categoryFilter] : Object.keys(categories);
@@ -55,7 +58,10 @@ export default function ExpensesTable({
             <Button style={{ cursor: "pointer" }}>Nova despesa</Button>
           </Popover.Trigger>
           <Popover.Content>
-            <NewExpensePopover categories={categories} />
+            <NewExpensePopover
+              categories={categories}
+              triggerNotification={() => setIsNotificationShown(true)}
+            />
           </Popover.Content>
         </Popover.Root>
       </Box>
@@ -91,6 +97,13 @@ export default function ExpensesTable({
           )}
         </Table.Body>
       </Table.Root>
+      {isNotificationShown && (
+        <Notification
+          type="success"
+          text="Despesa cadastrada com sucesso"
+          closeNotification={() => setIsNotificationShown(false)}
+        />
+      )}
     </>
   );
 }
