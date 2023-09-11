@@ -51,6 +51,10 @@ export default function NewExpensePopover({
     setIsDatePickerOpen(false);
   }
 
+  function toggleDatePicker() {
+    setIsDatePickerOpen((prev) => !prev);
+  }
+
   return (
     <Box
       style={{
@@ -99,7 +103,7 @@ export default function NewExpensePopover({
         </Select.Content>
       </Select.Root>
       <Popover.Root open={isDatePickerOpen}>
-        <Popover.Trigger onClick={() => setIsDatePickerOpen(true)}>
+        <Popover.Trigger onClick={toggleDatePicker}>
           <Box
             style={{
               display: "flex",
@@ -122,6 +126,7 @@ export default function NewExpensePopover({
           <CustomDatePicker
             value={formValues.date}
             setValue={handleDateChange}
+            toggleDatePicker={toggleDatePicker}
           />
         </Popover.Content>
       </Popover.Root>
