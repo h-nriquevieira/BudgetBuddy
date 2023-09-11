@@ -35,7 +35,7 @@ export default function BudgetPanel({ categories }: BudgetPanelProps) {
           style={{
             width: "100%",
             height: isSmallScreen ? "700px" : "400px",
-            padding: isSmallScreen ? "0" : "2rem 5rem 2rem 0rem ",
+            padding: isSmallScreen ? "0" : "2rem 0rem 2rem 0rem ",
           }}
         >
           <ResponsiveContainer maxHeight={1000} width="100%">
