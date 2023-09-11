@@ -1,5 +1,5 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
-import { Box, Callout, Heading } from "@radix-ui/themes";
+import { Box, Callout } from "@radix-ui/themes";
 import { useMediaQuery } from "react-responsive";
 import {
   Cell,
@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { CategoryResponse } from "../../types/CategoryTypes";
 import { COLORS } from "../../utils/colors";
+import BrandHeading from "../BrandHeading/BrandHeading";
 
 type BudgetPanelProps = {
   categories: CategoryResponse[];
@@ -20,11 +21,6 @@ export default function BudgetPanel({ categories }: BudgetPanelProps) {
   const isSmallScreen = useMediaQuery({
     query: "(max-width: 800px)",
   });
-
-  const headingStyles = {
-    fontWeight: "300",
-  };
-
   const data = categories.map((category) => ({
     name: category.name,
     value: category.budget,
@@ -32,15 +28,14 @@ export default function BudgetPanel({ categories }: BudgetPanelProps) {
 
   return (
     <>
-      <Heading as="h2" color="jade" style={headingStyles}>
-        Orçamento mensal
-      </Heading>
+      <BrandHeading>Orçamento mensal</BrandHeading>
+
       {categories.length ? (
         <Box
           style={{
             width: "100%",
             height: isSmallScreen ? "700px" : "400px",
-            padding: isSmallScreen ? "0" : "2rem 5rem 2rem 0rem ",
+            padding: isSmallScreen ? "0" : "2rem 0rem 2rem 0rem ",
           }}
         >
           <ResponsiveContainer maxHeight={1000} width="100%">

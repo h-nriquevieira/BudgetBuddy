@@ -6,6 +6,8 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Navbar from "../components/Navbar/Navbar";
 import BudgetPage from "../pages/BudgetPage/BudgetPage";
 import { budgetPageLoader } from "../pages/BudgetPage/budgetPageLoader";
+import ExpensesPage from "../pages/ExpensesPage/ExpensesPage";
+import { expensePageLoader } from "../pages/ExpensesPage/expensePageLoader";
 
 export const router = createBrowserRouter([
   {
@@ -32,7 +34,8 @@ export const router = createBrowserRouter([
           },
           {
             path: "expenses",
-            element: <p>Despesas</p>,
+            loader: expensePageLoader,
+            element: <ExpensesPage />,
           },
         ],
       },

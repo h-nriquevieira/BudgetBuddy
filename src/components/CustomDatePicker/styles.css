@@ -1,0 +1,34 @@
+.rdp {
+  display: grid;
+  place-content: center;
+}
+
+.rdp-button {
+  cursor: pointer;
+}
+
+.rdp-caption {
+  display: flex;
+  justify-content: space-between;
+  text-transform: capitalize;
+}
+
+.rdp-caption_label {
+  font-weight: 300;
+}
+
+.rdp-nav,
+.rdp-head_cell,
+.rdp-day_selected {
+  color: hsla(155, 99.8%, 30.4%);
+}
+
+.rdp-cell {
+  font-weight: 300;
+  text-align: center;
+  padding: 0 0.25rem;
+}
+
+.rdp-day_selected {
+  font-weight: 500;
+}
