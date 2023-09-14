@@ -40,7 +40,6 @@ export default function NavButton({
         fontSize: isSmallScreen ? "1.5rem" : "1.25rem",
         textTransform: "uppercase",
         fontWeight: isActive ? "500" : "300",
-        "--base-button-height": "100%",
       }}
       onClick={handleClick}
     >
