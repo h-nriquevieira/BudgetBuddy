@@ -80,3 +80,14 @@ export async function postNewCategory(category: CategoryCreateRequest) {
   });
   return res;
 }
+
+export async function getAllCategoriesBudgets() {
+  const res = await supabase.from("Category").select("budget");
+  const totalBudget = res.data?.reduce((acc, currentValue) => {
+    if (currentValue.budget) {
+      return acc + currentValue.budget;
+    }
+    return acc;
+  }, 0);
+  return totalBudget;
+}
