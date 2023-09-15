@@ -1,7 +1,9 @@
+import { Navigate } from "react-router-dom";
+
 export default function HomePage() {
   return (
     <>
-      <p>HomePage</p>
+      <Navigate to="/login" />
     </>
   );
 }
