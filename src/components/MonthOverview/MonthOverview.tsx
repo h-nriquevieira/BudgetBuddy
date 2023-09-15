@@ -109,13 +109,15 @@ export default function MonthOverview() {
               {currencyFormatter.format(remainingBudget ?? 0)}
             </Text>
           </Box>
-          <Box
-            style={{
-              width: `${(remainingBudget * 100) / totalBudget}%`,
-              height: "25px",
-              background: "var(--amber-9)",
-            }}
-          ></Box>
+          {remainingBudget && (
+            <Box
+              style={{
+                width: `${(remainingBudget * 100) / totalBudget}%`,
+                height: "25px",
+                background: "var(--amber-9)",
+              }}
+            ></Box>
+          )}
         </Box>
       </Box>
     </Card>

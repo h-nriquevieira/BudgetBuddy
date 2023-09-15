@@ -51,7 +51,8 @@ export default function CategoryAccordionItem({
               : currencyFormatter.format(category.budget as number)}
           </Text>
         </Box>
-        <Box
+        {/* Comentado para ativar no futuro */}
+        {/* <Box
           className={styles.AccordionContentText}
           style={{ display: "flex", gap: "1rem", justifyContent: "end" }}
         >
@@ -59,7 +60,7 @@ export default function CategoryAccordionItem({
             Editar
           </Button>
           <Button style={{ cursor: "pointer" }}>Ver despesas</Button>
-        </Box>
+        </Box> */}
       </Accordion.Content>
     </Accordion.Item>
   );
