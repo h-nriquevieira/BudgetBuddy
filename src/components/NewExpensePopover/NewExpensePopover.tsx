@@ -88,11 +88,11 @@ export default function NewExpensePopover({
       user_id: user?.id,
     };
     const res = await postExpense(expense);
-    if (res.statusText == "Created") {
+    if (res.error) {
+      setError("Ops, parece que algo deu errado.");
+    } else {
       submit(expense);
       triggerNotification();
-    } else {
-      setError("Ops, parece que algo deu errado.");
     }
   }
 
