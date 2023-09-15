@@ -1,7 +1,7 @@
 import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import styles from "../CategoryPanel/styles.module.css";
-import { Box, Button, Text } from "@radix-ui/themes";
+import { Box, Text } from "@radix-ui/themes";
 import { CategoryResponse } from "../../types/CategoryTypes";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 import { useEffect, useState } from "react";
