@@ -105,3 +105,34 @@ export async function getExpensesByCategoryId(categoryId: number) {
 
   return amountSpent;
 }
+
+export async function getAllExpensesFromCurrentMont() {
+  const currentDate = new Date();
+
+  const minYear = currentDate.getFullYear().toString();
+  let minMonth = (currentDate.getMonth() + 1).toString();
+
+  if (minMonth.length == 1) {
+    minMonth = "0" + minMonth;
+  }
+
+  const minDate = `${minYear}-${minMonth}-01T00:00`;
+  console.log(minDate);
+
+  const res = await supabase
+    .from("Expense")
+    .select("amount")
+    .filter("date", "gte", minDate);
+
+  const amountSpent = res.data?.reduce(
+    (totalAmount, currentExpense) => totalAmount + currentExpense.amount,
+    0,
+  );
+
+  return amountSpent;
+}
+
+export async function getMostRecentExpenses() {
+  const res = await supabase.from("Expense").select().limit(5);
+  return res.data;
+}
