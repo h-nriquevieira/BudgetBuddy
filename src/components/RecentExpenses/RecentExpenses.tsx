@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ExpenseResponse } from "../../types/ExpensesTypes";
 import { getMostRecentExpenses } from "../../service/ExpensesService";
-import { Card, Heading } from "@radix-ui/themes";
+import { Box, Card, Heading } from "@radix-ui/themes";
 import { getUserCategories } from "../../service/CategoryService";
 import ExpensesTable from "../ExpensesTable/ExpensesTable";
 
@@ -30,7 +30,16 @@ export default function RecentExpenses() {
   }, []);
 
   if (!recentExpenses || !categories) {
-    return <p>Loading</p>;
+    return (
+      <Box
+        style={{
+          width: "100%",
+          minHeight: "350px",
+          backgroundColor: "var(--gray-a5)",
+          borderRadius: "15px",
+        }}
+      ></Box>
+    );
   }
 
   return (

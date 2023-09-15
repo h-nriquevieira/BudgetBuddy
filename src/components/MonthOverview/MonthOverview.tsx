@@ -40,7 +40,16 @@ export default function MonthOverview() {
   }, []);
 
   if (!totalBudget || !totalExpenses) {
-    return <Text>Loading</Text>;
+    return (
+      <Box
+        style={{
+          width: isSmallScreen ? "100%" : "400px",
+          minHeight: "350px",
+          backgroundColor: "var(--gray-a5)",
+          borderRadius: "15px",
+        }}
+      ></Box>
+    );
   }
 
   return (
