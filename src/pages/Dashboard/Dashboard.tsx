@@ -3,9 +3,15 @@ import BrandHeading from "../../components/BrandHeading/BrandHeading";
 import PageContainer from "../../components/PageContainer/PageContainer";
 import { useAuthContext } from "../../context/AuthContext/useAuthContext";
 import MonthOverview from "../../components/MonthOverview/MonthOverview";
+import RecentExpenses from "../../components/RecentExpenses/RecentExpenses";
+import { useMediaQuery } from "react-responsive";
 
 export default function Dashboard() {
   const { user } = useAuthContext();
+
+  const isSmallScreen = useMediaQuery({
+    query: "(max-width: 1250px)",
+  });
 
   return (
     <PageContainer>
@@ -15,8 +21,18 @@ export default function Dashboard() {
           ? `, ${user.user_metadata.name}!` ?? `, ${user.user_metadata.email}!`
           : "!"}
       </BrandHeading>
-      <Box style={{ padding: "2rem 0", overflowY: "scroll" }}>
+      <Box
+        style={{
+          padding: "2rem 0",
+          overflowY: "scroll",
+          display: "flex",
+          flexDirection: isSmallScreen ? "column" : "row",
+          // alignItems: isSmallScreen ? "stretch" : "start",
+          gap: "2rem",
+        }}
+      >
         <MonthOverview />
+        <RecentExpenses />
       </Box>
     </PageContainer>
   );

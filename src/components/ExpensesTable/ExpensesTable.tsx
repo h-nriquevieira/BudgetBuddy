@@ -10,11 +10,13 @@ import Notification from "../Notification/Notification";
 type ExpensesTableProps = {
   expenses: ExpenseResponse[];
   categories: { [key: string]: string };
+  compact?: boolean;
 };
 
 export default function ExpensesTable({
   expenses,
   categories,
+  compact = false,
 }: ExpensesTableProps) {
   const [categoryFilter, setCategoryFilter] = useState<string[]>(
     [] as string[],
@@ -38,33 +40,35 @@ export default function ExpensesTable({
 
   return (
     <>
-      <Box style={{ display: "flex", gap: ".5rem", marginBottom: "1rem" }}>
-        <Popover.Root>
-          <Popover.Trigger>
-            <Button style={{ cursor: "pointer" }} variant="outline">
-              Filtrar
-            </Button>
-          </Popover.Trigger>
-          <Popover.Content>
-            <ExpenseCategoryFilter
-              categories={categories}
-              categoryFilter={categoryFilter}
-              setCategoryFilter={setCategoryFilter}
-            />
-          </Popover.Content>
-        </Popover.Root>
-        <Popover.Root>
-          <Popover.Trigger>
-            <Button style={{ cursor: "pointer" }}>Nova despesa</Button>
-          </Popover.Trigger>
-          <Popover.Content>
-            <NewExpensePopover
-              categories={categories}
-              triggerNotification={() => setIsNotificationShown(true)}
-            />
-          </Popover.Content>
-        </Popover.Root>
-      </Box>
+      {!compact && (
+        <Box style={{ display: "flex", gap: ".5rem", marginBottom: "1rem" }}>
+          <Popover.Root>
+            <Popover.Trigger>
+              <Button style={{ cursor: "pointer" }} variant="outline">
+                Filtrar
+              </Button>
+            </Popover.Trigger>
+            <Popover.Content>
+              <ExpenseCategoryFilter
+                categories={categories}
+                categoryFilter={categoryFilter}
+                setCategoryFilter={setCategoryFilter}
+              />
+            </Popover.Content>
+          </Popover.Root>
+          <Popover.Root>
+            <Popover.Trigger>
+              <Button style={{ cursor: "pointer" }}>Nova despesa</Button>
+            </Popover.Trigger>
+            <Popover.Content>
+              <NewExpensePopover
+                categories={categories}
+                triggerNotification={() => setIsNotificationShown(true)}
+              />
+            </Popover.Content>
+          </Popover.Root>
+        </Box>
+      )}
       <Table.Root>
         <Table.Header>
           <Table.Row>

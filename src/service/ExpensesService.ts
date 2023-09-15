@@ -131,3 +131,8 @@ export async function getAllExpensesFromCurrentMont() {
 
   return amountSpent;
 }
+
+export async function getMostRecentExpenses() {
+  const res = await supabase.from("Expense").select().limit(5);
+  return res.data;
+}
