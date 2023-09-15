@@ -78,6 +78,7 @@ export async function postNewCategory(category: CategoryCreateRequest) {
     user_id: category.user_id,
     budget: category.budget,
   });
+  console.log(res);
   return res;
 }
 

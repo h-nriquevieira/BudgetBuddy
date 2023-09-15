@@ -63,12 +63,12 @@ export default function NewCategoryPopover({
     };
 
     const res = await postNewCategory(newCategory);
-    if (res.statusText == "Created") {
+    if (res.error) {
+      setError("Ops, parece que algo deu errado.");
+    } else {
       submit(newCategory);
       triggerNotification();
       setIsPopoverOpen(false);
-    } else {
-      setError("Ops, parece que algo deu errado.");
     }
   }
 
