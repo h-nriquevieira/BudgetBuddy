@@ -1,27 +1,41 @@
-# React + TypeScript + Vite
+# BudgetBuddy - Controle de Finanças Pessoais
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bem-vindo ao BudgetBuddy! Este é um projeto desenvolvido para ajudar você a gerenciar suas finanças pessoais de forma eficiente. O BudgetBuddy oferece recursos de login com e-mail ou conta Google, permitindo que você acompanhe suas despesas, defina categorias de gastos e estabeleça orçamentos para cada uma delas.
 
-Currently, two official plugins are available:
+## Recursos Principais
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Login com E-mail ou Conta Google**: Faça login facilmente usando seu e-mail ou sua conta do Google.
 
-## Expanding the ESLint configuration
+- **Categorias Personalizadas**: Defina suas próprias categorias de gastos para organizar suas finanças de acordo com suas necessidades.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Orçamentos Mensais**: Estabeleça orçamentos para cada categoria de gasto e acompanhe seu progresso ao longo do mês.
 
-- Configure the top-level `parserOptions` property like this:
+- **Registro de Despesas**: Registre suas despesas de forma rápida e simples, associando-as às categorias definidas.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+- **Dashboard Intuitivo**: Tenha uma visão geral do seu mês, incluindo um resumo dos gastos em cada categoria e os gastos mais recentes.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Tecnologias Utilizadas
+
+Este projeto foi desenvolvido utilizando as seguintes tecnologias:
+
+- [React](https://reactjs.org/)
+
+- [React Router](https://reactrouter.com/)
+
+- [Supabase](https://supabase.com/)
+
+- [Radix Themes](https://radix-ui.com/)
+
+## Demonstração
+
+Você pode acessar o BudgetBuddy [aqui](https://budget-buddy-hvi.vercel.app/). Caso não queira criar uma conta, use a opção "Usar conta demo".
+
+## Contato
+
+Se você gostou do projeto e deseja entrar em contato, você pode me encontrar nos links abaixo:
+
+- [**Portfólio**](https://henriquevieiradev.vercel.app/)
+
+- [**LinkedIn**](https://www.linkedin.com/in/h-nriquevieira/)
+
+- [**E-mail**: h.nriquevieira@gmail.com](mailto:h.nriquevieira@gmail.com)
