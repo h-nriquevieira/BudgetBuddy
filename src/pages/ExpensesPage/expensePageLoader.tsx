@@ -15,19 +15,19 @@ export async function expensePageLoader() {
     };
   }
 
+  const categories: { [key: string]: string } = {};
+  categoriesData.data?.map((category) => {
+    categories[category.id.toString()] = category.name;
+  });
+
   if (expensesData.data?.length == 0) {
     return {
-      categories: {},
+      categories: { ...categories },
       expenses: [],
       minDate: new Date(),
       error: "no-expenses",
     };
   }
-
-  const categories: { [key: string]: string } = {};
-  categoriesData.data?.map((category) => {
-    categories[category.id.toString()] = category.name;
-  });
 
   const minDate = new Date(
     [...expenses].sort(
