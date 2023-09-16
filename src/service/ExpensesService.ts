@@ -133,6 +133,10 @@ export async function getAllExpensesFromCurrentMont() {
 }
 
 export async function getMostRecentExpenses() {
-  const res = await supabase.from("Expense").select().limit(5);
+  const res = await supabase
+    .from("Expense")
+    .select()
+    .order("date", { ascending: false })
+    .limit(5);
   return res.data;
 }
