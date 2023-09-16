@@ -19,8 +19,11 @@ export default function MonthOverview() {
     query: "(max-width: 1250px)",
   });
 
-  const remainingBudget =
-    totalBudget && totalExpenses && totalBudget - totalExpenses;
+  let remainingBudget;
+
+  if (totalBudget && totalBudget > 0) {
+    remainingBudget = totalExpenses ? totalBudget - totalExpenses : totalBudget;
+  }
 
   const styles = {
     legend: {
@@ -34,7 +37,6 @@ export default function MonthOverview() {
   useEffect(() => {
     (async () => {
       const budget = await getAllCategoriesBudgets();
-      console.log(budget);
       setTotalBudget(budget);
       setAppState((prev) => ({ ...prev, budgetLoaded: true }));
     })();
@@ -43,7 +45,6 @@ export default function MonthOverview() {
   useEffect(() => {
     (async () => {
       const expenses = await getAllExpensesFromCurrentMont();
-      console.log(expenses);
       setTotalExpenses(expenses);
       setAppState((prev) => ({ ...prev, expensesLoaded: true }));
     })();
@@ -134,7 +135,7 @@ export default function MonthOverview() {
           <Box style={{ display: "flex", justifyContent: "space-between" }}>
             <Text style={styles.legend}>Despesas: </Text>
             <Text style={styles.value}>
-              {totalExpenses && currencyFormatter.format(totalExpenses)}
+              {currencyFormatter.format(totalExpenses ?? 0)}
             </Text>
           </Box>
           <Box
@@ -155,7 +156,7 @@ export default function MonthOverview() {
           {remainingBudget && (
             <Box
               style={{
-                width: `${(remainingBudget * 100) / totalBudget}%`,
+                width: `${(remainingBudget * 100) / (totalBudget ?? 1)}%`,
                 height: "25px",
                 background: "var(--amber-9)",
               }}
