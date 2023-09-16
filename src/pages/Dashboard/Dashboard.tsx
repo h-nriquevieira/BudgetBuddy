@@ -12,9 +12,7 @@ export default function Dashboard() {
   const userName =
     user?.user_metadata.name ??
     user?.user_metadata.email ??
-    (user?.identities &&
-      user?.identities.length > 0 &&
-      user?.identities[0].identity_data?.email) ??
+    user?.email ??
     null;
 
   const isSmallScreen = useMediaQuery({
