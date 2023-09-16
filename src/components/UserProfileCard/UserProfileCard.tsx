@@ -24,7 +24,11 @@ export default function UserProfileCard() {
       <Flex gap="3" align="center">
         <Avatar
           size="3"
-          src={user?.user_metadata.avatar_url.toString()}
+          src={
+            user?.user_metadata.avatar_url
+              ? user.user_metadata.avatar_url.toString()
+              : ""
+          }
           fallback={user?.email?.charAt(0) ?? ""}
           style={{ borderRadius: "100%" }}
         />
