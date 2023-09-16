@@ -6,6 +6,24 @@ export async function expensePageLoader() {
   const expensesData = await getExpenses();
   const expenses = expensesData.data ?? [];
 
+  if (categoriesData.data?.length == 0) {
+    return {
+      categories: {},
+      expenses: [],
+      minDate: new Date(),
+      error: "no-categories",
+    };
+  }
+
+  if (expensesData.data?.length == 0) {
+    return {
+      categories: {},
+      expenses: [],
+      minDate: new Date(),
+      error: "no-expenses",
+    };
+  }
+
   const categories: { [key: string]: string } = {};
   categoriesData.data?.map((category) => {
     categories[category.id.toString()] = category.name;

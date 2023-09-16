@@ -43,8 +43,11 @@ export default function RecentExpenses() {
   }
 
   return (
-    <Card>
-      <Heading style={{ fontSize: "1.5rem" }} color="jade">
+    <Card style={{ padding: "1rem" }}>
+      <Heading
+        style={{ fontSize: "1.5rem", marginBottom: "1rem" }}
+        color="jade"
+      >
         Últimas despesas
       </Heading>
       <ExpensesTable

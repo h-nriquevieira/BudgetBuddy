@@ -9,18 +9,19 @@ import { useMediaQuery } from "react-responsive";
 export default function Dashboard() {
   const { user } = useAuthContext();
 
+  const userName =
+    user?.user_metadata.name ??
+    user?.user_metadata.email ??
+    user?.email ??
+    null;
+
   const isSmallScreen = useMediaQuery({
     query: "(max-width: 1250px)",
   });
 
   return (
     <PageContainer>
-      <BrandHeading>
-        Olá
-        {user
-          ? `, ${user.user_metadata.name}!` ?? `, ${user.user_metadata.email}!`
-          : "!"}
-      </BrandHeading>
+      <BrandHeading>{userName ? `Olá, ${userName}` : "Olá!"}</BrandHeading>
       <Box
         style={{
           padding: "2rem 0",

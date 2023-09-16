@@ -82,6 +82,16 @@ export default function LoginPage() {
     navigate("/app/dashboard");
   }
 
+  async function handleDemoSignin() {
+    const res = await signInWithEmail("demo@budgetbuddy.com", "budgetbuddy123");
+    if (res.error) {
+      setError(translateErrorMessage(res.error.message));
+      return;
+    }
+
+    navigate("/app/dashboard");
+  }
+
   async function handleSignUp() {
     const validateResponse = validateInputs();
     if (validateResponse) {
@@ -171,7 +181,7 @@ export default function LoginPage() {
         >
           {isSignUp ? "Cadastrar" : "Entrar"}
         </Button>
-        <Button style={{ cursor: "pointer" }} onClick={handleSignUp}>
+        <Button style={{ cursor: "pointer" }} onClick={handleDemoSignin}>
           Usar conta demo
         </Button>
         <Button
