@@ -1,13 +1,19 @@
-import { Box, Card, Heading, Text } from "@radix-ui/themes";
+import { Box, Button, Callout, Card, Heading, Text } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { getAllCategoriesBudgets } from "../../service/CategoryService";
 import { getAllExpensesFromCurrentMont } from "../../service/ExpensesService";
 import { useMediaQuery } from "react-responsive";
 import { currencyFormatter } from "../../utils/currencyFormatter";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { Link } from "react-router-dom";
 
 export default function MonthOverview() {
   const [totalBudget, setTotalBudget] = useState<number>();
   const [totalExpenses, setTotalExpenses] = useState<number>();
+  const [appState, setAppState] = useState({
+    budgetLoaded: false,
+    expensesLoaded: false,
+  });
 
   const isSmallScreen = useMediaQuery({
     query: "(max-width: 1250px)",
@@ -28,18 +34,22 @@ export default function MonthOverview() {
   useEffect(() => {
     (async () => {
       const budget = await getAllCategoriesBudgets();
+      console.log(budget);
       setTotalBudget(budget);
+      setAppState((prev) => ({ ...prev, budgetLoaded: true }));
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
       const expenses = await getAllExpensesFromCurrentMont();
+      console.log(expenses);
       setTotalExpenses(expenses);
+      setAppState((prev) => ({ ...prev, expensesLoaded: true }));
     })();
   }, []);
 
-  if (!totalBudget || !totalExpenses) {
+  if (!appState.budgetLoaded || !appState.expensesLoaded) {
     return (
       <Box
         style={{
@@ -49,6 +59,39 @@ export default function MonthOverview() {
           borderRadius: "15px",
         }}
       ></Box>
+    );
+  }
+
+  if (totalBudget == 0) {
+    return (
+      <Card
+        style={{
+          width: isSmallScreen ? "100%" : "400px",
+          padding: "1rem",
+          display: "flex",
+        }}
+      >
+        <Heading
+          style={{ fontSize: "1.5rem", marginBottom: "1rem" }}
+          color="jade"
+        >
+          Resumo mensal
+        </Heading>
+        <Callout.Root color="amber">
+          <Callout.Icon>
+            <ExclamationTriangleIcon />
+          </Callout.Icon>
+          <Callout.Text>
+            Você ainda não tem registros. Comece cadastrando suas categorias na
+            página orçamento.
+          </Callout.Text>
+        </Callout.Root>
+        <Link to="/app/budget">
+          <Button style={{ marginTop: "1rem", width: "100%" }}>
+            Ir para página Orçamento
+          </Button>
+        </Link>
+      </Card>
     );
   }
 
@@ -76,7 +119,7 @@ export default function MonthOverview() {
           <Box style={{ display: "flex", justifyContent: "space-between" }}>
             <Text style={styles.legend}>Orçamento: </Text>
             <Text style={styles.value}>
-              {currencyFormatter.format(totalBudget)}
+              {totalBudget && currencyFormatter.format(totalBudget)}
             </Text>
           </Box>
           <Box
@@ -91,12 +134,12 @@ export default function MonthOverview() {
           <Box style={{ display: "flex", justifyContent: "space-between" }}>
             <Text style={styles.legend}>Despesas: </Text>
             <Text style={styles.value}>
-              {currencyFormatter.format(totalExpenses)}
+              {totalExpenses && currencyFormatter.format(totalExpenses)}
             </Text>
           </Box>
           <Box
             style={{
-              width: `${(totalExpenses * 100) / totalBudget}%`,
+              width: `${((totalExpenses ?? 0) * 100) / (totalBudget ?? 0)}%`,
               height: "25px",
               background: "var(--tomato-9)",
             }}
