@@ -5,6 +5,7 @@ import { useAuthContext } from "../../context/AuthContext/useAuthContext";
 import MonthOverview from "../../components/MonthOverview/MonthOverview";
 import RecentExpenses from "../../components/RecentExpenses/RecentExpenses";
 import { useMediaQuery } from "react-responsive";
+import CategoryOverview from "../../components/CategoryOverview/CategoryOverview";
 
 export default function Dashboard() {
   const { user } = useAuthContext();
@@ -28,12 +29,13 @@ export default function Dashboard() {
           overflowY: "scroll",
           display: "flex",
           flexDirection: isSmallScreen ? "column" : "row",
-          // alignItems: isSmallScreen ? "stretch" : "start",
+          flexWrap: "wrap",
           gap: "2rem",
         }}
       >
         <MonthOverview />
         <RecentExpenses />
+        <CategoryOverview />
       </Box>
     </PageContainer>
   );
